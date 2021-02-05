@@ -18,7 +18,11 @@ QUERY = """
 
 @app.route("/")
 def root():
-    since = datetime.fromtimestamp(flask.request.getint("since", 0))
+    try:
+        since_ts = int(flask.request.args.get("since", "0"))
+    except (TypeError, ValueError):
+        since_ts = 0
+    since = datetime.fromtimestamp(since_ts)
 
     users = []
     with psycopg2.connect(
