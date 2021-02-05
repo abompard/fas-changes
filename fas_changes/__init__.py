@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 import flask
 import psycopg2
