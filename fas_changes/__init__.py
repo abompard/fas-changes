@@ -26,10 +26,10 @@ def root():
 
     users = []
     with psycopg2.connect(
-        dbname=flask.current_app.config.DB_NAME,
-        host=flask.current_app.config.DB_HOST,
-        user=flask.current_app.config.DB_USER,
-        password=flask.current_app.config.DB_PASSWORD,
+        dbname=flask.current_app.config["DB_NAME"],
+        host=flask.current_app.config["DB_HOST"],
+        user=flask.current_app.config["DB_USER"],
+        password=flask.current_app.config["DB_PASSWORD"],
     ) as conn:
         with conn.cursor() as cur:
             cur.execute(QUERY, (since,))
