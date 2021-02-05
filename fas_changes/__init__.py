@@ -18,12 +18,19 @@ QUERY = """
 
 @app.route("/")
 def root():
+    # Check shared password
+    access_key = flask.current_app.config["ACCESS_KEY"]
+    if flask.request.args.get("key", "") != access_key:
+        return flask.jsonify({"error": "Wrong access key"})
+
+    # Since
     try:
         since_ts = int(flask.request.args.get("since", "0"))
     except (TypeError, ValueError):
         since_ts = 0
     since = datetime.fromtimestamp(since_ts)
 
+    # Get data
     users = []
     with psycopg2.connect(
         dbname=flask.current_app.config["DB_NAME"],
